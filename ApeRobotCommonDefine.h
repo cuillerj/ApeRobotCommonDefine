@@ -1,3 +1,10 @@
+#define iLeftWheelDiameter 6.4 //(in cm - used to measure robot moves)  
+#define iRightWheelDiameter iLeftWheelDiameter //(in cm - used to measure robot moves)
+#define iRobotWidth  46.5 // distance beetwen the 2 wheels cm
+#define shiftEchoVsRotationCenter 10 // cm
+#define frontLenght  35 // from echo system cm
+#define backLenght  12 // from echo system  cm
+#define securityLenght 30 // minimal obstacle distance  cm
 #define minDistToBeDone 3  // cm
 #define minRotToBeDone 5  // degree
 #define scanning 102   // 0x66
