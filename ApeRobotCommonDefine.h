@@ -1,6 +1,9 @@
+// to be kept consistant with ApeRobotCommonDefine.m
 #define iLeftWheelDiameter 6.4 //(in cm - used to measure robot moves)  
-#define iRightWheelDiameter iLeftWheelDiameter //(in cm - used to measure robot moves)
+#define iRightWheelDiameter 6.4 //(in cm - used to measure robot moves)
 #define iRobotWidth  46.5 // distance beetwen the 2 wheels cm
+#define leftWheelEncoderHoles 8  // number of holes of the encoder wheel
+#define rightWheelEncoderHoles 8 // number of holes of the encoder wheel
 #define shiftEchoVsRotationCenter 10 // cm
 #define frontLenght  35 // from echo system cm
 #define backLenght  12 // from echo system  cm
