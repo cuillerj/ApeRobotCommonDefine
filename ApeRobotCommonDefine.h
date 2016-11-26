@@ -32,7 +32,10 @@
 #define diagMotorPbSynchro 2
 #define diagMotorPbEncoder 3
 #define diagRobotPause 0
-#define diagRobotObstacle 1 
+#define diagRobotObstacle 1
+#define diagConnectionIP 0
+#define diagConnectionI2C 1
+#define diagConnectionI2CReady 2
 #define resetMotor 0
 #define resetObstacle 1
 #define resetPause 2
