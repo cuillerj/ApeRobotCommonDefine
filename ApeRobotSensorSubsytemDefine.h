@@ -2,6 +2,11 @@
 /*
 Sensor subsystem that manage gyroscope and magneto sensors
 	             that comunicate with the robot
+The subsystem is a SI2C master station
+The robot and sensors are slave stations
+There are 2 ways for comminucation between subsystem and robot
+			polling way: the subsystem frenquently give the word to the robot
+			interrupt way
 */
 /*
 L3G20 sensor parameters
@@ -9,51 +14,59 @@ L3G20 sensor parameters
 #define L3GD20H_Address 0x6b     // default value
 #define LSM303D_Address 0x1d     // default value
 #define L3GD20H_Address_Reg 0    // stored in this register
-#define L3GZero_rate_level 25
-#define L3GAxeOrientation 3  //  1=X 2=Y 3=Z
-#define L3GInterrupt2 // if used
-#define L3GPollingCycle 5
-#define selectedRange 2        // default value (0 1 or 2) {245, 500, 2000}
+#define L3GZero_rate_level 25    // according to the gyro documentation
+#define L3GAxeOrientation 3  	// define rotation axe 1=X 2=Y 3=Z
+#define L3GInterrupt2 			//  the gyroscope will set DRDY (data ready) (INT2)  interrupt Therefore the subsystem will read available data
+//#define L3GPollingCycle 5  		// polling cycle in ms - exclusive with L3GInterrupt2 - only use if DRDY interrupt not available
+#define selectedRange 0        // default gyroscope selected range value (0 1 or 2) meaning {245, 500, 2000}
 #define selectedRange_Reg 1      // stored in this register
 #define L3GODRValue 0b01000000    //  the 4 first bits are used to set DR1 DR0 BW1 BW0 to select data rate, bandwidth and cut-off 100,200,400,800 Hz
-#define L3GODR_Reg 17
-#define L3GCPositiveClockWise false
+#define L3GPositiveClockWise -1  // if L3GPositiveClockWise is true gyroscope is positive when rotating clockwise and negative when rotating anticlockwise
 /*
-Sensor subsystem internal registers
+Sensors subsystem internal registers
+define subsytem register that contain on byte data
 */
-#define robotAddress_Reg 2         // stored in this register~
-#define L3GcycleDuration_Reg 3
-#define relativeHeading_Reg1 6
-#define relativeHeading_Reg2 7
-#define relativeHeading_Reg3 8
+#define robotAddress_Reg 2         // data stored in this register is robot I2C address
+//#define L3GcycleDuration_Reg 3   // exclusive with L3GInterrupt2 - only use if DRDY interrupt not available
+#define robotPollingTimer_Reg1 4     	// stored in this register
+#define robotPollingTimer_Reg2 5     	// stored in this register
+#define relativeHeading_Reg1 6     // data stored in this register is sign of gyroscope heading
+#define relativeHeading_Reg2 7     //data stored in this register is high byte of gyroscope heading
+#define relativeHeading_Reg3 8     // data stored in this register is low byte of gyroscope heading
 //#define magnetoInstalled true
 #define MagnetoCycleDuration 5000         // default magneto polling timer value ms 
-#define headingNorthOrientation_Reg1 9
-#define headingNorthOrientation_Reg2 10
-#define MagnetocycleDuration_Reg1 11      // stored in this register
-#define MagnetocycleDuration_Reg2 12      // stored in this register~
+#define headingNorthOrientation_Reg1 9   // data stored in this register is high byte of magneto heading
+#define headingNorthOrientation_Reg2 10  // data stored in this register is low byte of magneto heading
+#define MagnetocycleDuration_Reg1 11      // data stored in this register is
+#define MagnetocycleDuration_Reg2 12      // data stored in this register is
 #define savedNorthOrientationBefore_Reg1 13
 #define savedNorthOrientationBefore_Reg2 14
 #define savedNorthOrientationAfter_Reg1 15
 #define savedNorthOrientationAfter_Reg2 16
+#define L3GODR_Reg 17                    // data stored in this register is the selected gyro ODR selector
+#define GyroBiasMicrosec_Reg 18          // data stored in this register is the gyro bias taken into account in rotation computation
+/*
+*/
+#define L3GRegistersCopySubsystemMapping 100 	// define the offset in the subsystem registers where storing a copy of L3G registers
+#define L3GRegistersCopySubsystemFirst 0x20 	// define the first L3G register to be storesd on the subsystem
+#define L3GRegistersCopySubsystemNumber 32 		// define the number of L3G register to be storesd on the subsystem
 
 /*
-communication parameters
+parameters used for I2C communication
 */
-#define robotI2CAddress 8          		// robot I2C address
-#define maxRegsNumberUpdate 3            // maixum number of registers that can be set at a time
+#define robotI2CAddress 8          		// define the robot I2C address
+#define maxRegsNumberUpdate 3            // maximum number of registers that can be set at a time
 #define maxRegsNumberRead 6              // maixum number of registers that can be read a time
-#define robotPollingTimer 500       // default robot polling timer value only used if InputRobotRequestPin not defined (soft polling)
-#define robotPollingTimer_Reg1 4     // stored in this register
-#define robotPollingTimer_Reg2 5     // stored in this register
-#define pollResponseLenght 10       // define frame lenght for polling request and response
+#define robotPollingTimer 500       	// default robot polling timer value only used if InputRobotRequestPin not defined (soft polling)
+#define pollResponseLenght 10       	// define frame lenght for polling request and response
 #define minimumDurationBeetwenPolling 10 // in ms used by robot when hard polling is used to avoid to maintain RobotOutputRobotRequestPin high to long
+
 /*
-define request byte from robot to sensor subsystem
+define request (byte) from robot to sensor subsystem
 */
-#define idleRequest 0x00
-#define setRegisterRequest 0x01
-#define readRegisterRequest 0x02
+#define idleRequest 0x00               // nothing to do
+#define setRegisterRequest 0x01        // robot request to set registers
+#define readRegisterRequest 0x02       // robot request to read registers
 #define startMonitorGyro 0x04
 #define stopMonitorGyro 0x05
 #define startInitMonitorGyro 0x06
@@ -64,6 +77,7 @@ define request byte from robot to sensor subsystem
 #define setGyroSelectedRange 0x0b
 #define printGyroRegisters 0x0c
 #define setGyroODR 0x0d
+
 /*
 define response byte from sensor subsytem to robot
 */
@@ -85,6 +99,7 @@ Sensor subsytem parameters
 #define L3GInterruptNumber 0				// interrupt number corresponding with L3GInterruptNumber (same as digitalPinToInterrupt(L3GPinInterrupt))
 #define SensorOutputReadyPin 11              // Sensor subsytem Pin that is set high when Sensor subsytem is ready to work
 #define SensorInputRobotRequestPin 12        // sensor subsytem pin that is high when robot is asking for polling (if defined means hard polling is used if not soft polling is used)
+#define GyroBiasMicrosec 193                 // bias in micro second taken into account when computing the rotation - max 225
 /* 
 robot parameters
 */
@@ -97,3 +112,4 @@ Sensor subsytem status byte description
 */
 #define monitGyroStatusBit 0                 // bit 0 gyroscope monitoring running
 #define monitMagnetoStatusBit 1               // bit 1 magneto monitoring running
+#define I2CConnectionBit 2
