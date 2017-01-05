@@ -11,23 +11,22 @@ There are 2 ways for comminucation between subsystem and robot
 /*
 L3G20 sensor parameters
 */
-#define L3GD20H_Address 0x6b     // default value  gyro
-#define LSM303D_Address 0x1d     // default value  magneto
-#define L3GD20H_Address_Reg 0    // stored in this register
+#define BNO055_Address 0x29     // default value  gyro
+#define BNO055_Address_Reg 0    // stored in this register
 #define L3GZero_rate_level 25    // according to the gyro documentation
 #define L3GAxeOrientation 3  	// define rotation axe 1=X 2=Y 3=Z
-#define L3GInterrupt2 			//  the gyroscope will set DRDY (data ready) (INT2)  interrupt Therefore the subsystem will read available data
-//#define L3GPollingCycle 5  		// polling cycle in ms - exclusive with L3GInterrupt2 - only use if DRDY interrupt not available
+#define BNO055Interrupt 			//  the gyroscope will set DRDY (data ready) (INT2)  interrupt Therefore the subsystem will read available data
+#define BNO055PollingCycle 5  		// polling cycle in ms - exclusive with L3GInterrupt2 - only use if DRDY interrupt not available
 #define selectedRange 0        // default gyroscope selected range value (0 1 or 2) meaning {245, 500, 2000}
 #define selectedRange_Reg 1      // stored in this register
 #define L3GODRValue 0b01000000    //  the 4 first bits are used to set DR1 DR0 BW1 BW0 to select data rate, bandwidth and cut-off 100,200,400,800 Hz
-#define GyroPositiveClockWise -1  // if L3GPositiveClockWise is true gyroscope is positive when rotating clockwise and negative when rotating anticlockwise
+#define GyroPositiveClockWise 1  // if L3GPositiveClockWise is true gyroscope is positive when rotating clockwise and negative when rotating anticlockwise
 /*
 Sensors subsystem internal registers
 define subsytem register that contain on byte data
 */
 #define robotAddress_Reg 2         // data stored in this register is robot I2C address
-//#define L3GcycleDuration_Reg 3   // exclusive with L3GInterrupt2 - only use if DRDY interrupt not available
+#define BNO055cycleDuration_Reg 3   // exclusive with L3GInterrupt2 - only use if DRDY interrupt not available
 #define robotPollingTimer_Reg1 4     	// stored in this register
 #define robotPollingTimer_Reg2 5     	// stored in this register
 #define relativeHeading_Reg1 6     // data stored in this register is sign of gyroscope heading
@@ -47,9 +46,7 @@ define subsytem register that contain on byte data
 #define GyroBiasMicrosec_Reg 18          // data stored in this register is the gyro bias taken into account in rotation computation
 /*
 */
-#define L3GRegistersCopySubsystemMapping 100 	// define the offset in the subsystem registers where storing a copy of L3G registers
-#define L3GRegistersCopySubsystemFirst 0x20 	// define the first L3G register to be storesd on the subsystem
-#define L3GRegistersCopySubsystemNumber 32 		// define the number of L3G register to be storesd on the subsystem
+
 
 /*
 parameters used for I2C communication
@@ -95,11 +92,14 @@ uint8_t calibrateGyroResponse[1]={relativeHeading_Reg1};
 Sensor subsytem parameters
 */
 #define nbReadForBiasComputing 1000         // used to calibrate gyroscope
-#define L3GPinInterrupt 2                   // sensor subsystem PIN connected to L3G DRDY  
-#define L3GInterruptNumber 0				// interrupt number corresponding with L3GInterruptNumber (same as digitalPinToInterrupt(L3GPinInterrupt))
+#define BNO055PinInterrupt 2                   // sensor subsystem PIN connected to L3G DRDY  
+#define BNO055InterruptNumber 0				// interrupt number corresponding with L3GInterruptNumber (same as digitalPinToInterrupt(L3GPinInterrupt))
 #define SensorOutputReadyPin 11              // Sensor subsytem Pin that is set high when Sensor subsytem is ready to work
 #define SensorInputRobotRequestPin 12        // sensor subsytem pin that is high when robot is asking for polling (if defined means hard polling is used if not soft polling is used)
 #define GyroBiasMicrosec 193                 // bias in micro second taken into account when computing the rotation - max 225
+#define BNO055RegistersCopySubsystemMapping 100   // define the offset in the subsystem registers where storing a copy of BNO055 registers
+#define BNO055RegistersCopySubsystemFirst 0x39  // define the first BNO055 register to be storesd on the subsystem
+#define BNO055RegistersCopySubsystemNumber 6    // define the number of BNO055 register to be storesd on the subsystem
 /* 
 robot parameters
 */
@@ -113,3 +113,6 @@ Sensor subsytem status byte description
 #define monitGyroStatusBit 0                 // bit 0 gyroscope monitoring running
 #define monitMagnetoStatusBit 1               // bit 1 magneto monitoring running
 #define I2CConnectionBit 2
+
+#define BO055_INT_EN_ADDR 0x10 
+#define BO055_ACC_INT_Settings 0x12
