@@ -9,18 +9,19 @@ There are 2 ways for comminucation between subsystem and robot
 			interrupt way
 */
 /*
-L3G20 sensor parameters
+BNO055 sensor parameters
 */
 #define BNO055_Address 0x29     // default value  gyro
 #define BNO055_Address_Reg 0    // stored in this register
-#define L3GZero_rate_level 25    // according to the gyro documentation
-#define L3GAxeOrientation 3  	// define rotation axe 1=X 2=Y 3=Z
 #define BNO055Interrupt 			//  the gyroscope will set DRDY (data ready) (INT2)  interrupt Therefore the subsystem will read available data
-#define BNO055PollingCycle 5  		// polling cycle in ms - exclusive with L3GInterrupt2 - only use if DRDY interrupt not available
-#define selectedRange 0        // default gyroscope selected range value (0 1 or 2) meaning {245, 500, 2000}
-#define selectedRange_Reg 1      // stored in this register
-#define L3GODRValue 0b01000000    //  the 4 first bits are used to set DR1 DR0 BW1 BW0 to select data rate, bandwidth and cut-off 100,200,400,800 Hz
-#define GyroPositiveClockWise 1  // if L3GPositiveClockWise is true gyroscope is positive when rotating clockwise and negative when rotating anticlockwise
+#define BNO055PollingCycle 5  		// polling cycle in ms 
+//#define selectedRange 0        // default gyroscope selected range value (0 1 or 2) meaning {245, 500, 2000}
+//#define selectedRange_Reg 1      // stored in this register
+#define GyroPositiveClockWise 1  // if GyroPositiveClockWise is true gyroscope is positive when rotating clockwise and negative when rotating anticlockwise
+#define permanentShiftHeading 0  // in positive degres contains difference between sensor X orientztion and subsystem heading
+#define IMUMode 0x08
+#define compassMode 0x09
+#define NDOFMode 0x0c
 /*
 Sensors subsystem internal registers
 define subsytem register that contain on byte data
@@ -34,16 +35,27 @@ define subsytem register that contain on byte data
 #define relativeHeading_Reg3 8     // data stored in this register is low byte of gyroscope heading
 //#define magnetoInstalled true
 #define MagnetoCycleDuration 5000         // default magneto polling timer value ms 
-#define headingNorthOrientation_Reg1 9   // data stored in this register is high byte of magneto heading
-#define headingNorthOrientation_Reg2 10  // data stored in this register is low byte of magneto heading
-#define MagnetocycleDuration_Reg1 11      // data stored in this register is
-#define MagnetocycleDuration_Reg2 12      // data stored in this register is
-#define savedNorthOrientationBefore_Reg1 13
-#define savedNorthOrientationBefore_Reg2 14
+#define absoluteHeading_Reg1 9   // data stored in this register is high byte of magneto heading
+#define absoluteHeading_Reg2 10  // data stored in this register is low byte of magneto heading
+#define absoluteHeading_Reg3 11      // data stored in this register is
+#define savedNorthOrientationBefore_Reg1 12
+#define savedNorthOrientationBefore_Reg2 13
+#define savedNorthOrientationBefore_Reg3 14
 #define savedNorthOrientationAfter_Reg1 15
 #define savedNorthOrientationAfter_Reg2 16
-#define L3GODR_Reg 17                    // data stored in this register is the selected gyro ODR selector
-#define GyroBiasMicrosec_Reg 18          // data stored in this register is the gyro bias taken into account in rotation computation
+#define savedNorthOrientationAfter_Reg3 17
+#define permanentNOShift_Reg1 18
+#define permanentNOShift_Reg2 19
+
+#define compasHeading_Reg1 20  // data stored in this register is high byte of magneto heading
+#define compasHeading_Reg2 21  // data stored in this register is low byte of magneto heading
+
+#define BNO055Mode_Reg 22                // contains a copy of the current BNO running mode
+#define BNO055CalStatus_Reg 23                // contains a copy of BNO calibration status
+#define BNO055SysStatus_Reg 24               // contains a copy of BNO status
+#define BNO055TestStatus_Reg 25              // contains a copy of BNO status
+#define BNO055SysError_Reg 26               // contains a copy of BNO status
+
 /*
 */
 
@@ -71,9 +83,9 @@ define request (byte) from robot to sensor subsystem
 #define calibrateGyro 0x08
 #define startMonitorMagneto 0x09
 #define stopMonitorMagneto 0x0a
-#define setGyroSelectedRange 0x0b
+#define setBNO055Mode 0x0b
 #define printGyroRegisters 0x0c
-#define setGyroODR 0x0d
+//#define setGyroODR 0x0d
 
 /*
 define response byte from sensor subsytem to robot
@@ -82,11 +94,12 @@ define response byte from sensor subsytem to robot
 /*
 used by robot to construct request and analyse response
 */
-uint8_t headingResponse[3]={relativeHeading_Reg1,relativeHeading_Reg2,relativeHeading_Reg3};
-uint8_t NOResponse[2]={headingNorthOrientation_Reg1,headingNorthOrientation_Reg2};
-uint8_t beforeNOResponse[2]={savedNorthOrientationBefore_Reg1,savedNorthOrientationBefore_Reg2};
-uint8_t afterNOResponse[2]={savedNorthOrientationAfter_Reg1,savedNorthOrientationAfter_Reg2};
-uint8_t beforeAfterNOResponse[4]={savedNorthOrientationBefore_Reg1,savedNorthOrientationBefore_Reg2,savedNorthOrientationAfter_Reg1,savedNorthOrientationAfter_Reg2};
+uint8_t relativeHeadingResponse[3]={relativeHeading_Reg1,relativeHeading_Reg2,relativeHeading_Reg3};
+uint8_t absoluteHeadingResponse[3]={absoluteHeading_Reg1,absoluteHeading_Reg2,absoluteHeading_Reg3};
+uint8_t compassResponse[2]={compasHeading_Reg1,compasHeading_Reg2};
+uint8_t beforeNOResponse[3]={savedNorthOrientationBefore_Reg1,savedNorthOrientationBefore_Reg2,savedNorthOrientationBefore_Reg3};
+uint8_t afterNOResponse[3]={savedNorthOrientationAfter_Reg1,savedNorthOrientationAfter_Reg2,savedNorthOrientationAfter_Reg3};
+uint8_t beforeAfterNOResponse[6]={savedNorthOrientationBefore_Reg1,savedNorthOrientationBefore_Reg2,savedNorthOrientationBefore_Reg3,savedNorthOrientationAfter_Reg1,savedNorthOrientationAfter_Reg2,savedNorthOrientationAfter_Reg3};
 uint8_t calibrateGyroResponse[1]={relativeHeading_Reg1};
 /*
 Sensor subsytem parameters
@@ -114,5 +127,3 @@ Sensor subsytem status byte description
 #define monitMagnetoStatusBit 1               // bit 1 magneto monitoring running
 #define I2CConnectionBit 2
 
-#define BO055_INT_EN_ADDR 0x10 
-#define BO055_ACC_INT_Settings 0x12
