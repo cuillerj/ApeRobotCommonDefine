@@ -3,12 +3,15 @@
 #define iRightWheelDiameter 6.52 //(in cm - used to measure robot moves)
 #define iRobotWidth  43 // distance beetwen the 2 wheels cm used for computing rotation
 #define iRobotFrontWidth  30 // robot width at front
+
 #define leftWheelEncoderHoles 8  // number of holes of the encoder wheel
 #define rightWheelEncoderHoles 8 // number of holes of the encoder wheel
 #define shiftEchoVsRotationCenter 6// cm (6) mis  0 pour test le 05012017
 #define shiftEchoFrontBack 5    // cm
-#define frontLenght 35 // from echo system cm7 to avoid onstacle
+#define frontLenght 45 // from echo system cm7 to avoid onstacle
 #define backLenght  12 // from echo system  cm to avoid onstacle
+#define iRobotFrontDiag sqrt(frontLenght*frontLenght+iRobotFrontWidth*iRobotFrontWidth)
+#define iRobotBackDiag sqrt(backLenght*backLenght+iRobotWidth*iRobotWidth)
 //#define shiftRotationEcho  6 // from echo system  cm to compute rotation
 #define securityLenght 20 // minimal obstacle distance  cm
 #define minDistToBeDone 3  // cm
@@ -35,6 +38,8 @@
 #define moveUnderLimitation 5
 #define moveKoDueToSpeedInconsistancy 10
 #define moveKoDueToObstacle 7
+#define moveKoDueToNotEnoughSpace 11
+#define rotationKoToManyRetry 0xfe
 #define diagMotorPbLeft 0
 #define diagMotorPbRight 1
 #define diagMotorPbSynchro 2

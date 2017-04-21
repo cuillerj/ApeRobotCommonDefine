@@ -17,8 +17,8 @@ BNO055 sensor parameters
 #define BNO055PollingCycle 5  		// polling cycle in ms 
 //#define selectedRange 0        // default gyroscope selected range value (0 1 or 2) meaning {245, 500, 2000}
 //#define selectedRange_Reg 1      // stored in this register
-#define GyroPositiveClockWise 1  // if GyroPositiveClockWise is true gyroscope is positive when rotating clockwise and negative when rotating anticlockwise
-#define permanentShiftHeading 0  // in positive degres contains difference between sensor X orientztion and subsystem heading
+#define RobotRotationClockWise -1  // 1  when robot rotateclockwise and -1 when ribot rotateanticlockwise
+#define BNOPermanentShiftHeading 0  // in positive degres contains difference between sensor X orientztion and subsystem heading
 #define IMUMode 0x08
 #define compassMode 0x09
 #define NDOFMode 0x0c
@@ -57,6 +57,29 @@ define subsytem register that contain on byte data
 #define BNO055SysError_Reg 26               // contains a copy of BNO status
 
 /*
+dynamique localisation
+*/
+#define requestCompute_Reg 27
+#define leftDistance_Reg 28
+#define rightDistance_Reg 29
+#define initPosX_Reg1 30
+#define initPosX_Reg2 31
+#define initPosY_Reg1 32
+#define initPosY_Reg2 33
+#define deltaLeftPosX_reg1 34
+#define deltaLeftPosX_reg2 35
+#define deltaLeftPosY_reg1 36
+#define deltaLeftPosY_reg2 37
+#define deltaRightPosX_reg1 38
+#define deltaRightPosX_reg2 39
+#define deltaRightPosY_reg1 40
+#define deltaRightPosY_reg2 41
+#define initHeading_reg1 42
+#define initHeading_reg2 43
+#define locationHeading_reg1 44
+#define locationHeading_reg2 45
+
+/*
 */
 
 
@@ -85,6 +108,8 @@ define request (byte) from robot to sensor subsystem
 #define stopMonitorMagneto 0x0a
 #define setBNO055Mode 0x0b
 #define printGyroRegisters 0x0c
+#define setMoveRegisters 0x0d  
+#define initLocation 0x0e  
 //#define setGyroODR 0x0d
 
 /*
@@ -101,6 +126,10 @@ uint8_t beforeNOResponse[3]={savedNorthOrientationBefore_Reg1,savedNorthOrientat
 uint8_t afterNOResponse[3]={savedNorthOrientationAfter_Reg1,savedNorthOrientationAfter_Reg2,savedNorthOrientationAfter_Reg3};
 uint8_t beforeAfterNOResponse[6]={savedNorthOrientationBefore_Reg1,savedNorthOrientationBefore_Reg2,savedNorthOrientationBefore_Reg3,savedNorthOrientationAfter_Reg1,savedNorthOrientationAfter_Reg2,savedNorthOrientationAfter_Reg3};
 uint8_t calibrateGyroResponse[1]={relativeHeading_Reg1};
+uint8_t BNO055StatusResponse[4]={BNO055Mode_Reg,BNO055CalStatus_Reg,BNO055SysStatus_Reg,BNO055SysError_Reg};
+uint8_t BNO055LeftLocationResponse[4]={deltaLeftPosX_reg1,deltaLeftPosX_reg2,deltaLeftPosY_reg1,deltaLeftPosY_reg2};
+uint8_t BNO055RightLocationResponse[4]={deltaRightPosX_reg1,deltaRightPosX_reg2,deltaRightPosY_reg1,deltaRightPosY_reg2};
+uint8_t BNO055LocationHeading[2]={locationHeading_reg1,locationHeading_reg2};
 /*
 Sensor subsytem parameters
 */
@@ -127,3 +156,9 @@ Sensor subsytem status byte description
 #define monitMagnetoStatusBit 1               // bit 1 magneto monitoring running
 #define I2CConnectionBit 2
 
+/*
+Used BNO modes
+*/
+#define   MODE_IMUPLUS                                 0X08
+#define   MODE_COMPASS                                 0X09
+#define   MODE_NDOF                                    0X0C
