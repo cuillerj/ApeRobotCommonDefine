@@ -15,8 +15,9 @@
 //#define shiftRotationEcho  6 // from echo system  cm to compute rotation
 #define securityLenght 20 // minimal obstacle distance  cm
 #define minDistToBeDone 3  // cm
-#define minRotToBeDone 5  // degree
+#define minRotToBeDone 5  // without gyro degree
 #define minRotEncoderAbility ceil(2*(iLeftWheelDiameter*PI)/(min(leftWheelEncoderHoles,rightWheelEncoderHoles)))  // degree
+#define minRotGyroAbility 2  // whit gyro degree
 //#define minRotEncoderAbility 5 // degree
 #define minRotationTarget 2
 #define maxInertialRotation 158
@@ -32,11 +33,12 @@
 #define gyroRotating 110  // 0x6e
 #define gyroRotateEnd 111  // 0x6f
 #define moveRetcodeEncoderLeftLowLevel 1
-#define moveRetcodeEncoderRightLowLevel 2
+#define moveRetcodeEncoderRightLowLevel 21
 #define moveRetcodeEncoderLeftHighLevel 3
 #define moveRetcodeEncoderRightHighLevel 4
+#define moveWheelSpeedInconsistancy 1
 #define moveUnderLimitation 5
-#define moveKoDueToSpeedInconsistancy 10
+#define moveKoDueToWheelStopped 10
 #define moveKoDueToObstacle 7
 #define moveKoDueToNotEnoughSpace 11
 #define rotationKoToManyRetry 0xfe
