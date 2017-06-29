@@ -78,7 +78,7 @@ dynamique localisation
 #define initHeading_reg2 43
 #define locationHeading_reg1 44
 #define locationHeading_reg2 45
-
+#define forwardBackward_reg 46
 /*
 */
 
