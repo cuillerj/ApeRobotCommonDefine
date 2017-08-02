@@ -13,7 +13,7 @@
 #define iRobotFrontDiag sqrt(frontLenght*frontLenght+iRobotFrontWidth*iRobotFrontWidth)
 #define iRobotBackDiag sqrt(backLenght*backLenght+iRobotWidth*iRobotWidth)
 //#define shiftRotationEcho  6 // from echo system  cm to compute rotation
-#define securityLenght 20 // minimal obstacle distance  cm
+#define securityLenght 15 // minimal obstacle distance  cm
 #define minDistToBeDone 3  // cm
 #define minRotToBeDone 5  // without gyro degree
 #define minRotEncoderAbility ceil(2*(fLeftWheelDiameter*PI)/(min(leftWheelEncoderHoles,rightWheelEncoderHoles)))  // degree
@@ -42,6 +42,7 @@
 #define moveKoDueToObstacle 7
 #define moveKoDueToNotEnoughSpace 11
 #define rotationKoToManyRetry 0xfe
+#define requestRejected 0xff
 #define diagMotorPbLeft 0
 #define diagMotorPbRight 1
 #define diagMotorPbSynchro 2
