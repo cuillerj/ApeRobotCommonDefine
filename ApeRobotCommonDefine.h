@@ -22,7 +22,7 @@
 #define minRotationTarget 2
 #define maxInertialRotation 158
 // to be kept consistant with java code
-#define timeoutRetCode 254 // 0xfe
+#define timeoutRetCode 154 // 0x9a
 #define scanning 102   // 0x66
 #define scanEnded 103  // 0x67
 #define moving 104     // 0x68
@@ -33,7 +33,7 @@
 #define pingFBEnded 109 //0x6d
 #define gyroRotating 110  // 0x6e
 #define gyroRotateEnd 111  // 0x6f
-#define moveAcrossPassEnd 112  // 0x70
+#define moveAcrossPassEnded 112  // 0x70
 #define moveRetcodeEncoderLeftLowLevel 1
 #define moveRetcodeEncoderRightLowLevel 21
 #define moveRetcodeEncoderLeftHighLevel 3
@@ -43,6 +43,13 @@
 #define moveKoDueToWheelStopped 10
 #define moveKoDueToObstacle 7
 #define moveKoDueToNotEnoughSpace 11
+#define moveAcrossPathUnderLimitation 105
+#define moveAcrossPathKoKoDueToWheelStopped 110
+#define moveAcrossPathKoDueToObstacle 107
+#define moveAcrossPathKoDueToNotEnoughSpace 111
+#define moveAcrossPathKoDueToNotFindingStart 112
+#define moveAcrossPathKoDueToNotFindingEntry 113
+#define moveAcrossPathKoDueToNotFindingExit 114
 #define rotationKoToManyRetry 0xfe
 #define requestRejected 0xff
 #define diagMotorPbLeft 0
