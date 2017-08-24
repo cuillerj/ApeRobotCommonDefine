@@ -67,4 +67,12 @@
 #define resetPause 2
 #define moveAcrossPass 0x6e
 #define rotateTypeGyro 0x6f
-#define pingFrontBack 0x70
+#define requestPingFrontBack 0x70
+#define requestUpdateNO 0x7b
+#define requestBNOData 0x7c
+#define requestNarrowPathMesurments 0x7d
+#define requestNarrowPathEchos 0x7e
+#define respBNOSubsytemStatus 0x75
+#define respBNOLocation 0x76
+#define respNarrowPathMesurments 0x77
+#define respNarrowPathEchos  0x78
