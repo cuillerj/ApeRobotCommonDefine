@@ -17,10 +17,11 @@
 #define minDistToBeDone 3  // cm
 #define minRotToBeDone 5  // without gyro degree
 #define minRotEncoderAbility ceil(2*(fLeftWheelDiameter*PI)/(min(leftWheelEncoderHoles,rightWheelEncoderHoles)))  // degree
-#define minRotGyroAbility 2  // whit gyro degree
+#define minRotGyroAbility 2  // with gyro degree
 //#define minRotEncoderAbility 5 // degree
 #define minRotationTarget 2
 #define maxInertialRotation 158
+#define northAlignPrecision 3
 // to be kept consistant with java code
 #define timeoutRetCode 154 // 0x9a
 #define scanning 102   // 0x66
@@ -46,10 +47,10 @@
 #define moveAcrossPathUnderLimitation 105
 #define moveAcrossPathKoKoDueToWheelStopped 110
 #define moveAcrossPathKoDueToObstacle 107
-#define moveAcrossPathKoDueToNotEnoughSpace 111
-#define moveAcrossPathKoDueToNotFindingStart 112
-#define moveAcrossPathKoDueToNotFindingEntry 113
-#define moveAcrossPathKoDueToNotFindingExit 114
+#define moveAcrossPathKoDueToNotEnoughSpace 0x6f
+#define moveAcrossPathKoDueToNotFindingStart 0x70
+#define moveAcrossPathKoDueToNotFindingEntry 0x71 // 0x71
+#define moveAcrossPathKoDueToNotFindingExit 0x72
 #define rotationKoToManyRetry 0xfe
 #define requestRejected 0xff
 #define diagMotorPbLeft 0
