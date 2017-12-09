@@ -35,18 +35,18 @@
 #define gyroRotating 110  // 0x6e
 #define gyroRotateEnd 111  // 0x6f
 #define moveAcrossPassEnded 112  // 0x70
-#define moveRetcodeEncoderLeftLowLevel 1
-#define moveRetcodeEncoderRightLowLevel 21
-#define moveRetcodeEncoderLeftHighLevel 3
-#define moveRetcodeEncoderRightHighLevel 4
-#define moveWheelSpeedInconsistancy 1
-#define moveUnderLimitation 5
-#define moveKoDueToWheelStopped 10
-#define moveKoDueToObstacle 7
-#define moveKoDueToNotEnoughSpace 11
-#define moveAcrossPathUnderLimitation 105
-#define moveAcrossPathKoKoDueToWheelStopped 110
-#define moveAcrossPathKoDueToObstacle 107
+#define moveRetcodeEncoderLeftLowLevel 0x01
+#define moveRetcodeEncoderRightLowLevel 0x02
+#define moveRetcodeEncoderLeftHighLevel 0x03
+#define moveRetcodeEncoderRightHighLevel 0x04
+#define moveWheelSpeedInconsistancy 0x10
+#define moveUnderLimitation 0x05
+#define moveKoDueToWheelStopped 0x0a
+#define moveKoDueToObstacle 0x07
+#define moveKoDueToNotEnoughSpace 0x0b
+#define moveAcrossPathUnderLimitation 0x69
+#define moveAcrossPathKoKoDueToWheelStopped 0x6e
+#define moveAcrossPathKoDueToObstacle 0x6b
 #define moveAcrossPathKoDueToNotEnoughSpace 0x6f
 #define moveAcrossPathKoDueToNotFindingStart 0x70
 #define moveAcrossPathKoDueToNotFindingEntry 0x71 // 0x71
