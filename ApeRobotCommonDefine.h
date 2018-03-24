@@ -15,13 +15,13 @@
 //#define shiftRotationEcho  6 // from echo system  cm to compute rotation
 #define securityLenght 15 // minimal obstacle distance  cm
 #define minDistToBeDone 3  // cm
-#define minRotToBeDone 5  // without gyro degree
+#define minRotToBeDone 8  // without gyro degree
 #define minRotEncoderAbility ceil(2*(fLeftWheelDiameter*PI)/(min(leftWheelEncoderHoles,rightWheelEncoderHoles)))  // degree
 #define minRotGyroAbility 2  // with gyro degree
 //#define minRotEncoderAbility 5 // degree
 #define minRotationTarget 2
 #define maxInertialRotation 158
-#define northAlignPrecision 3
+#define northAlignPrecision 8
 // to be kept consistant with java code
 #define timeoutRetCode 154 // 0x9a
 #define scanning 102   // 0x66
