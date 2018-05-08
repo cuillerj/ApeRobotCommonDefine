@@ -77,3 +77,5 @@
 #define respBNOLocation 0x76
 #define respNarrowPathMesurments 0x77
 #define respNarrowPathEchos  0x78
+#define requestTrace  0x90
+#define respTrace  0x90
