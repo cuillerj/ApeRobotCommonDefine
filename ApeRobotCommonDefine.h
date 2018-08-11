@@ -21,7 +21,7 @@
 //#define minRotEncoderAbility 5 // degree
 #define minRotationTarget 2
 #define maxInertialRotation 158
-#define northAlignPrecision 8
+#define northAlignPrecision 7
 // to be kept consistant with java code
 #define timeoutRetCode 154 // 0x9a
 #define scanning 102   // 0x66
@@ -44,6 +44,7 @@
 #define moveKoDueToWheelStopped 0x0a
 #define moveKoDueToObstacle 0x07
 #define moveKoDueToNotEnoughSpace 0x0b
+#define northAlignRequest 0x45
 #define moveAcrossPathUnderLimitation 0x69
 #define moveAcrossPathKoKoDueToWheelStopped 0x6e
 #define moveAcrossPathKoDueToObstacle 0x6b
@@ -79,3 +80,6 @@
 #define respNarrowPathEchos  0x78
 #define requestTrace  0x90
 #define respTrace  0x90
+#define requestTraceNO  0x91
+#define respTraceNO  0x91
+#define requestSleep  0x92
