@@ -67,6 +67,8 @@
 #define resetMotor 0
 #define resetObstacle 1
 #define resetPause 2
+#define scan360 0x66
+#define moving 0x68
 #define moveAcrossPass 0x6e
 #define rotateTypeGyro 0x6f
 #define requestPingFrontBack 0x70
