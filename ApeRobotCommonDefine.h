@@ -85,3 +85,11 @@
 #define requestTraceNO  0x91
 #define respTraceNO  0x91
 #define requestSleep  0x92
+#define requestVersion  0x93
+#define respVersion  0x93
+
+#define echoFront 19  // arduino pin for mesuring echo delay for front 
+#define trigFront  23     // arduino pin for trigerring front echo
+#define echoBack  18   // arduino pin for mesuring echo delay for back 
+#define trigBack  22    // arduino pin for trigerring back echo
+#define MAX_DISTANCE 400
