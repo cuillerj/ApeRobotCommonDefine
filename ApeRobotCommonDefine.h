@@ -13,7 +13,7 @@
 #define iRobotFrontDiag sqrt(frontLenght*frontLenght+iRobotFrontWidth*iRobotFrontWidth)
 #define iRobotBackDiag sqrt(backLenght*backLenght+iRobotWidth*iRobotWidth)
 //#define shiftRotationEcho  6 // from echo system  cm to compute rotation
-#define securityLenght 15 // minimal obstacle distance  cm
+#define securityLenght 10 // minimal obstacle distance  cm
 #define minDistToBeDone 3  // cm
 #define minRotToBeDone 8  // without gyro degree
 #define minRotEncoderAbility ceil(2*(fLeftWheelDiameter*PI)/(min(leftWheelEncoderHoles,rightWheelEncoderHoles)))  // degree
@@ -21,7 +21,7 @@
 //#define minRotEncoderAbility 5 // degree
 #define minRotationTarget 2
 #define maxInertialRotation 158
-#define northAlignPrecision 7
+#define northAlignPrecision 6
 // to be kept consistant with java code
 #define timeoutRetCode 154 // 0x9a
 #define scanning 102   // 0x66
