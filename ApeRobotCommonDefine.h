@@ -1,8 +1,9 @@
 // to be kept consistant with ApeRobotCommonDefine.m
 #define fLeftWheelDiameter 6.36 //(in cm - used to measure robot moves)  
 #define fRightWheelDiameter 6.42 //(in cm - used to measure robot moves)
-#define iRobotWidth  43 // distance beetwen the 2 wheels cm used for computing rotation
+#define iRobotWidth 38 // distance beetwen the 2 wheels cm used for computing rotation
 #define iRobotFrontWidth  30 // robot width at front
+#define iRobotBackWidth  42 // robot width at back
 
 #define leftWheelEncoderHoles 8  // number of holes of the encoder wheel
 #define rightWheelEncoderHoles 8 // number of holes of the encoder wheel
@@ -87,6 +88,9 @@
 #define requestSleep  0x92
 #define requestVersion  0x93
 #define respVersion  0x93
+#define requestPID  0x94
+#define respPID  0x94
+#define setPID 0x95
 
 #define echoFront 19  // arduino pin for mesuring echo delay for front 
 #define trigFront  23     // arduino pin for trigerring front echo
