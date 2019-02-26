@@ -1,6 +1,6 @@
 // to be kept consistant with ApeRobotCommonDefine.m
-#define fLeftWheelDiameter 6.36 //(in cm - used to measure robot moves)  
-#define fRightWheelDiameter 6.42 //(in cm - used to measure robot moves)
+#define fLeftWheelDiameter 6.46 //(in cm - used to measure robot moves)  
+#define fRightWheelDiameter 6.46 //(in cm - used to measure robot moves)
 #define iRobotWidth 38 // distance beetwen the 2 wheels cm used for computing rotation
 #define iRobotFrontWidth  30 // robot width at front
 #define iRobotBackWidth  42 // robot width at back
@@ -35,7 +35,7 @@
 #define pingFBEnded 109 //0x6d
 #define gyroRotating 110  // 0x6e
 #define gyroRotateEnd 111  // 0x6f
-#define moveAcrossPassEnded 112  // 0x70
+#define moveAcrossPassEnded 0x81 
 #define moveRetcodeEncoderLeftLowLevel 0x01
 #define moveRetcodeEncoderRightLowLevel 0x02
 #define moveRetcodeEncoderLeftHighLevel 0x03
@@ -70,7 +70,7 @@
 #define resetPause 2
 #define scan360 0x66
 #define moving 0x68
-#define moveAcrossPass 0x6e
+#define moveAcrossPass 0x80
 #define rotateTypeGyro 0x6f
 #define requestPingFrontBack 0x70
 #define requestUpdateNO 0x7b
