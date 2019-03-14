@@ -2,7 +2,7 @@
 #define fLeftWheelDiameter 6.46 //(in cm - used to measure robot moves)  
 #define fRightWheelDiameter 6.46 //(in cm - used to measure robot moves)
 #define iRobotWidth 38 // distance beetwen the 2 wheels cm used for computing rotation
-#define iRobotFrontWidth  30 // robot width at front
+#define iRobotFrontWidth  33 // robot width at front
 #define iRobotBackWidth  42 // robot width at back
 
 #define leftWheelEncoderHoles 8  // number of holes of the encoder wheel
