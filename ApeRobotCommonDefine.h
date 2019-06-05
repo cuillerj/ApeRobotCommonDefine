@@ -9,12 +9,12 @@
 #define rightWheelEncoderHoles 8 // number of holes of the encoder wheel
 #define shiftEchoVsRotationCenter 6// cm (6) mis  0 pour test le 05012017
 #define shiftEchoFrontBack 6    // cm
-#define frontLenght 45 // from echo system cm7 to avoid onstacle
-#define backLenght  12 // from echo system  cm to avoid onstacle
+#define frontLenght 35 // from echo system cm7 to avoid onstacle
+#define backLenght  8 // from echo system  cm to avoid onstacle
 #define iRobotFrontDiag sqrt(frontLenght*frontLenght+iRobotFrontWidth*iRobotFrontWidth)
 #define iRobotBackDiag sqrt(backLenght*backLenght+iRobotWidth*iRobotWidth)
 //#define shiftRotationEcho  6 // from echo system  cm to compute rotation
-#define securityLenght 7 // minimal obstacle distance  cm
+#define securityLenght 10 // minimal obstacle distance  cm
 #define minDistToBeDone 3  // cm
 #define minRotToBeDone 3  // without gyro degree
 #define minRotEncoderAbility ceil(2*(fLeftWheelDiameter*PI)/(min(leftWheelEncoderHoles,rightWheelEncoderHoles)))  // degree
@@ -64,13 +64,18 @@
 #define diagRobotGyroRotation 2
 #define diagConnectionIP 0
 #define diagConnectionI2C 1
-#define diagConnectionI2CReady 2
+//#define diagConnectionI2CReady 2
+#define diagConnectionLostInputFrame 2
+#define diagConnectionDuplicateInputFrame 3
+
 #define resetMotor 0
 #define resetObstacle 1
 #define resetPause 2
 #define scan360 0x66
 #define moving 0x68
 
+#define ackRequired 0x01
+#define respActionEnded 0x01
 #define requestScan360 0x2b
 #define requestSetEncoderIRPower 0x3a
 #define requestSetEncoderThreshold 0x3c
@@ -93,8 +98,13 @@
 #define requestMove 0x6d
 #define rotateTypeGyro 0x6f
 #define requestPingFrontBack 0x70
+#define respPowerValue 0x70
+#define respEncoderMotorValue 0x71
+#define respEncoderValues 0x72
 #define requestReset 0x72
 #define requestStop 0x73
+#define respPWMValues 0x73
+#define respEncodersHolesValues 0x74
 #define requestCalibrateWheels 0x77
 #define requestStart 0x78
 #define requestSetBNOMode 0x79
@@ -120,6 +130,9 @@
 #define setPID 0x95
 #define requestIRsensors 0x96
 #define respIRsensors 0x96
+#define requestInternalFlags 0x97
+#define respInternalFlags 0x97
+
 
 #define echoFront 19  // arduino pin for mesuring echo delay for front 
 #define trigFront  23     // arduino pin for trigerring front echo
